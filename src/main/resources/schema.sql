@@ -8,3 +8,24 @@ CREATE TABLE IF NOT EXISTS users (
 
     CONSTRAINT uk_oauth_id UNIQUE (provider, provider_id)
 );
+
+CREATE TABLE IF NOT EXISTS players (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    puuid VARCHAR(100) NOT NULL UNIQUE,
+    game_name VARCHAR(100) NOT NULL,
+    tag_line VARCHAR(100) NOT NULL,
+    last_played_game_id VARCHAR(50),
+    revision_date DATETIME,
+    profile_icon_id INT NOT NULL,
+    summoner_level INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS subscriptions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    player_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_player FOREIGN KEY (player_id) REFERENCES players(id),
+    CONSTRAINT uk_subscription_user_player UNIQUE (user_id, player_id)
+);
