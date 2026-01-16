@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -39,11 +40,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             throw new OAuth2AuthenticationException("지원하지 않는 소셜 로그인입니다.");
         }
 
+        // db에 유저 저장 or 업데이트
         User user = saveOrUpdate(userInfo.email, userInfo.name, registrationId, userInfo.providerId);
+
+        Map<String, Object> customAttributes = new HashMap<>(attributes);
+        customAttributes.put("role", user.getRole().name());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),
-                attributes,
+                customAttributes,
                 userNameAttributeName
         );
     }
