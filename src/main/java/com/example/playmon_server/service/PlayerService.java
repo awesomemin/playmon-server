@@ -32,6 +32,7 @@ public class PlayerService {
         );
     }
 
+    // TODO - 나중에 getPuuid 말고 getAccount로 바꾸기 (대소문자 이슈)
     public String getPuuid(String gameName, String tagLine) {
         Optional<Player> optionalPlayer = playerRepository.findByGameNameTagLine(gameName, tagLine);
         if (optionalPlayer.isPresent()) {
