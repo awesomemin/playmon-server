@@ -25,6 +25,12 @@
 
 - 1명 이상이 구독하고 있는 플레이어에 대해 돌아가면서 새 게임을 시작했는지 확인한다.
   만약 새 게임을 시작했다면 구독자에게 푸시 알림을 전송한다.
+- 플레이어 검색 시 작동
+  1. 유저가 gameName + tagLine으로 플레이어를 검색한다.
+  2. riot api를 통해 gameName + tagLine을 puuid로 바꾼다.
+  3. 해당 puuid가 DB에 있는지 확인한다.
+  4. DB에 없으면 riot api를 통해 profileIconId, revisionDate, summonerLevel을 얻어서 DB에 저장한다. 끝!
+  5. DB에 있으면 riot api를 통해 profileIconId, revisionDate, summonerLevel을 얻어서 revisionDate을 비교한다. revisionDate이 다르면 profileIconId, revisionDate, summonerLevel, gameName, tagLine을 업데이트한다. 끝!
 
 ## 사용하는 riot-api 스펙
 - `/lol/summoner/v4/summoners/by-puuid/{puuid}`
