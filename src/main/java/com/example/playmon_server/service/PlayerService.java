@@ -25,6 +25,7 @@ public class PlayerService {
         assert summonerV4Dto != null;
         Player player = saverOrUpdate(puuid, gameName, tagLine, summonerV4Dto.profileIconId(), summonerV4Dto.summonerLevel(), summonerV4Dto.revisionDate());
         return new PlayerResponse(
+                player.getId(),
                 player.getGameName(),
                 player.getTagLine(),
                 player.getSummonerLevel(),
