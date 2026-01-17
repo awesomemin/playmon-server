@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS players (
     game_name VARCHAR(100) NOT NULL,
     tag_line VARCHAR(100) NOT NULL,
     last_played_game_id VARCHAR(50),
-    revision_date DATETIME,
+    revision_date BIGINT,
     profile_icon_id INT NOT NULL,
-    summoner_level INT NOT NULL
+    summoner_level BIGINT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS subscriptions (
