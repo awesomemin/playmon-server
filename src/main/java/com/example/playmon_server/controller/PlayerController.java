@@ -16,7 +16,7 @@ public class PlayerController {
 
     @GetMapping("/players/{gameName}/{tagLine}")
     @ResponseBody
-    public PlayerResponse getPlayer(@PathVariable("gameName") String gameName, @PathVariable("tagLine") String tagLine) {
+    public PlayerResponse getPlayer(@PathVariable String gameName, @PathVariable String tagLine) {
         return playerService.getPlayer(gameName, tagLine);
     }
 }
