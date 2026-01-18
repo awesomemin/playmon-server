@@ -1,8 +1,5 @@
-package com.example.playmon_server.service;
+package com.example.playmon_server.subscription;
 
-import com.example.playmon_server.domain.Subscription;
-import com.example.playmon_server.exception.DuplicateSubscriptionException;
-import com.example.playmon_server.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

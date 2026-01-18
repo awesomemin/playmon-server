@@ -1,4 +1,4 @@
-package com.example.playmon_server.domain;
+package com.example.playmon_server.subscription;
 
 import lombok.*;
 

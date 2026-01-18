@@ -1,7 +1,5 @@
-package com.example.playmon_server.controller;
+package com.example.playmon_server.player;
 
-import com.example.playmon_server.dto.PlayerResponse;
-import com.example.playmon_server.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

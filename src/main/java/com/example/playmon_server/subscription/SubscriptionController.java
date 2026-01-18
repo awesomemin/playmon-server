@@ -1,8 +1,6 @@
-package com.example.playmon_server.controller;
+package com.example.playmon_server.subscription;
 
-import com.example.playmon_server.domain.Subscription;
-import com.example.playmon_server.dto.CustomUserDetails;
-import com.example.playmon_server.service.SubscriptionService;
+import com.example.playmon_server.user.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
-package com.example.playmon_server.controller;
+package com.example.playmon_server;
 
-import com.example.playmon_server.dto.CustomUserDetails;
+import com.example.playmon_server.user.CustomUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

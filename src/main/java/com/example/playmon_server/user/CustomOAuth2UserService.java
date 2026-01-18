@@ -1,8 +1,5 @@
-package com.example.playmon_server.service;
+package com.example.playmon_server.user;
 
-import com.example.playmon_server.domain.Role;
-import com.example.playmon_server.domain.User;
-import com.example.playmon_server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

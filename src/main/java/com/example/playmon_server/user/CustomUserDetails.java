@@ -1,4 +1,4 @@
-package com.example.playmon_server.dto;
+package com.example.playmon_server.user;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;

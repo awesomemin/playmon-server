@@ -1,6 +1,5 @@
-package com.example.playmon_server.repository;
+package com.example.playmon_server.player;
 
-import com.example.playmon_server.domain.Player;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

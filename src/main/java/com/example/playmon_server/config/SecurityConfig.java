@@ -1,7 +1,9 @@
 package com.example.playmon_server.config;
 
-import com.example.playmon_server.service.CustomOAuth2UserService;
-import com.example.playmon_server.util.JwtTokenProvider;
+import com.example.playmon_server.user.CustomOAuth2UserService;
+import com.example.playmon_server.user.JwtAuthenticationFilter;
+import com.example.playmon_server.user.JwtTokenProvider;
+import com.example.playmon_server.user.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

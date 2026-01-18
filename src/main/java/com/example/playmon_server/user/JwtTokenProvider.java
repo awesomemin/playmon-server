@@ -1,6 +1,5 @@
-package com.example.playmon_server.util;
+package com.example.playmon_server.user;
 
-import com.example.playmon_server.dto.CustomUserDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

@@ -1,4 +1,4 @@
-package com.example.playmon_server.dto;
+package com.example.playmon_server.player;
 
 public record PlayerResponse(
         long id,

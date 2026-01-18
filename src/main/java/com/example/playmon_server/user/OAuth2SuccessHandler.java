@@ -1,6 +1,5 @@
-package com.example.playmon_server.config;
+package com.example.playmon_server.user;
 
-import com.example.playmon_server.util.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

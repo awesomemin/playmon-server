@@ -1,9 +1,6 @@
-package com.example.playmon_server.service;
+package com.example.playmon_server.player;
 
-import com.example.playmon_server.domain.Player;
-import com.example.playmon_server.dto.PlayerResponse;
 import com.example.playmon_server.dto.riot.RiotDto;
-import com.example.playmon_server.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
