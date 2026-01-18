@@ -18,6 +18,6 @@ public class ExampleController {
     @GetMapping("/secret")
     @ResponseBody
     public String secret(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return "this is secret page. your information is / " + userDetails.getUsername() + " / " + userDetails.getName();
+        return "this is secret page. your information is / " + userDetails.getUsername() + " / " + userDetails.getName() + " / " + userDetails.getUserId();
     }
 }

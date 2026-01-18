@@ -32,8 +32,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String email = (String) attributes.get("email");
         String name = (String) attributes.get("name");
         String role = (String) attributes.get("role");
+        long userId = (long) attributes.get("userId");
 
-        String token = jwtTokenProvider.createToken(email, name, role);
+        String token = jwtTokenProvider.createToken(email, name, role, userId);
 
         String targetUrl = UriComponentsBuilder.fromUriString(redirectUri)
                 .queryParam("token", token)

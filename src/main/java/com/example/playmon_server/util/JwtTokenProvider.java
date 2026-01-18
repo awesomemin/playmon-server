@@ -29,7 +29,7 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String createToken(String email, String name, String role) {
+    public String createToken(String email, String name, String role, long userId) {
         final long ONE_HOUR = 1000 * 60 * 60;
         Date now = new Date();
         Date validity = new Date(now.getTime() + ONE_HOUR);
@@ -38,6 +38,7 @@ public class JwtTokenProvider {
                 .setSubject(email)
                 .claim("name", name)
                 .claim("role", role)
+                .claim("userId", userId)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -45,30 +46,21 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        String email = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .getSubject();
+        io.jsonwebtoken.Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
 
-        String role = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .get("role", String.class);
-
-        String name = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(token)
-                        .getBody()
-                        .get("name", String.class);
+        String email = claims.getSubject();
+        String role = claims.get("role", String.class);
+        String name = claims.get("name", String.class);
+        Number userIdNumber = claims.get("userId", Number.class);
+        long userId = userIdNumber.longValue();
 
         List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
 
-        CustomUserDetails principal = new CustomUserDetails(email, "", authorities, name);
+        CustomUserDetails principal = new CustomUserDetails(email, "", authorities, name, userId);
 
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
