@@ -35,6 +35,21 @@
   4. DB에 얻은 정보를 저장/업데이트한다.
   5. 유저에게 gameName, tagLine, profileIconId, summonerLevel을 반환한다.
 
+## OAuth2 로그인 과정
+1. 사용자: '구글 로그인' 버튼 클릭
+2. 스프링: 사용자를 구글 로그인 페이지로 리다이렉트 시킴
+3. 사용자: 구글에서 ID/PW 입력 및 로그인 성공
+4. 구글: 인증 코드를 포함해서 유저를 우리 서버로 리다이렉트 시킴(`/login/oauth2/code/google`)
+5. 스프링
+   1. 인증 코드를 구글에게 주고 액세스 토큰을 받아옴 (얘 진짜 너네가 인증해준 거 맞아?)
+   2. `CustomOAuth2UserService.loadUser()` 실행
+      1. 액세스 토큰으로 구글에서 유저 정보(이메일, 이름)를 가져옴
+      2. DB에 유저 정보 저장
+      3. `CustomUserDetails` 객체 반환
+   3. OAuth2AuthenticationToken 객체 생성(여기에 `CustomUserDetails` 담김)
+   4. SecurityContext에 저장
+6. 스프링: `OAuth2SuccessHandler.onAuthenticationSuccess()`실행 (JWT 발급 등)
+
 ## 사용하는 riot-api 스펙
 - `/lol/summoner/v4/summoners/by-puuid/{puuid}`
   - puuid를 통해 gameName, tagLine이 변경되었는지 확인하고 profileIconId를 얻는다
