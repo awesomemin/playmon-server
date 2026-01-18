@@ -18,6 +18,16 @@ public class SubscriptionRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    public Optional<Subscription> findById(long subscriptionId) {
+        String sql = "SELECT * FROM subscriptions WHERE id = ?";
+        try {
+            Subscription subscription = jdbcTemplate.queryForObject(sql, subscriptionRowMapper(), subscriptionId);
+            return Optional.ofNullable(subscription);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Subscription> findByUserPlayer(long userId, long playerId) {
         String sql = "SELECT * FROM subscriptions WHERE user_id = ? AND player_id = ?";
         try {
@@ -61,5 +71,14 @@ public class SubscriptionRepository {
                 .userId(userId)
                 .playerId(playerId)
                 .build();
+    }
+
+    public void deleteById(long subscriptionId) {
+        String sql = "DELETE FROM subscriptions WHERE id = ?";
+
+        int affectedRows = jdbcTemplate.update(sql, subscriptionId);
+        if(affectedRows == 0) {
+            throw new IllegalStateException("삭제할 대상이 존재하지 않습니다.");
+        }
     }
 }
