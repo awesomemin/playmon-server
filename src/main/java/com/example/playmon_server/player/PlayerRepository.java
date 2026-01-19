@@ -88,6 +88,20 @@ public class PlayerRepository {
                 .profileIconId(rs.getInt("profile_icon_id"))
                 .summonerLevel(rs.getInt("summoner_level"))
                 .build();
+    }
 
+    public Optional<Player> findById(Long id) {
+        String sql = "SELECT * FROM players WHERE id = ?";
+        try {
+            Player player = jdbcTemplate.queryForObject(sql, playerRowMapper(), id);
+            return Optional.ofNullable(player);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public void updateLastPlayedGameId(Long playerId, String gameId) {
+        String sql = "UPDATE players SET last_played_game_id = ? WHERE id = ?";
+        jdbcTemplate.update(sql, gameId, playerId);
     }
 }

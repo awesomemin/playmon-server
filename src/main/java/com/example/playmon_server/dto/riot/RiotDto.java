@@ -14,4 +14,9 @@ public class RiotDto {
         String gameName,
         String tagLine
     ) {}
+
+    public record SpectatorV5(
+        long gameId,
+        long gameStartTime
+    ) {}
 }

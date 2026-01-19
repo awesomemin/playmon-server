@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -80,5 +81,10 @@ public class SubscriptionRepository {
         if(affectedRows == 0) {
             throw new IllegalStateException("삭제할 대상이 존재하지 않습니다.");
         }
+    }
+
+    public List<Long> findAllSubscribedPlayerIds() {
+        String sql = "SELECT DISTINCT player_id FROM subscriptions";
+        return jdbcTemplate.queryForList(sql, Long.class);
     }
 }
