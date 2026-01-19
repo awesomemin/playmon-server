@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
     provider VARCHAR(20) NOT NULL,
     provider_id VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL,
+    fcm_token VARCHAR(500),
 
     CONSTRAINT uk_oauth_id UNIQUE (provider, provider_id)
 );

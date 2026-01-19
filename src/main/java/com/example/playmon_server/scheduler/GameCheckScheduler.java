@@ -1,6 +1,7 @@
 package com.example.playmon_server.scheduler;
 
 import com.example.playmon_server.dto.riot.RiotDto;
+import com.example.playmon_server.notification.FcmService;
 import com.example.playmon_server.player.Player;
 import com.example.playmon_server.player.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class GameCheckScheduler {
     private final PlayerQueueService playerQueueService;
     private final PlayerRepository playerRepository;
     private final RestClient restClient;
+    private final FcmService fcmService;
 
     private final int ONE_MINUTE = 60000;
     private final int TWO_SECONDS = 2000;
@@ -50,6 +52,7 @@ public class GameCheckScheduler {
             if (!currentGameId.equals(player.getLastPlayedGameId())) {
                 System.out.println("[New Game] " + player.getGameName() + "#" + player.getTagLine() + " started a new game! (gameId: " + currentGameId + ", gameStartTime: " + spectator.gameStartTime() + ")");
                 playerRepository.updateLastPlayedGameId(playerId, currentGameId);
+                fcmService.notifySubscribers(playerId, player, spectator.gameStartTime());
             }
         }
     }

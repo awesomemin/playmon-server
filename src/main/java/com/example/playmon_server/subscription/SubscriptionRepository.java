@@ -87,4 +87,9 @@ public class SubscriptionRepository {
         String sql = "SELECT DISTINCT player_id FROM subscriptions";
         return jdbcTemplate.queryForList(sql, Long.class);
     }
+
+    public List<Long> findAllUserIdsByPlayerId(long playerId) {
+        String sql = "SELECT user_id FROM subscriptions WHERE player_id = ?";
+        return jdbcTemplate.queryForList(sql, Long.class, playerId);
+    }
 }

@@ -9,6 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class UserRepository {
             return user;
         }
 
-        String sql = "INSERT INTO users (email, name, provider, provider_id, role) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (email, name, provider, provider_id, role, fcm_token) VALUES (?, ?, ?, ?, ?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -33,6 +35,7 @@ public class UserRepository {
             ps.setString(3, user.getProvider());
             ps.setString(4, user.getProviderId());
             ps.setString(5, user.getRole().name());
+            ps.setString(6, user.getFcmToken());
             return ps;
         }, keyHolder);
 
@@ -63,6 +66,31 @@ public class UserRepository {
                 .provider(rs.getString("provider"))
                 .providerId(rs.getString("provider_id"))
                 .role(Role.valueOf(rs.getString("role")))
+                .fcmToken(rs.getString("fcm_token"))
                 .build();
+    }
+
+    public Optional<User> findById(Long id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try {
+            User user = jdbcTemplate.queryForObject(sql, userRowMapper(), id);
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public List<User> findAllByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return Collections.emptyList();
+        }
+        String placeholders = String.join(",", Collections.nCopies(ids.size(), "?"));
+        String sql = "SELECT * FROM users WHERE id IN (" + placeholders + ")";
+        return jdbcTemplate.query(sql, userRowMapper(), ids.toArray());
+    }
+
+    public void updateFcmToken(Long userId, String fcmToken) {
+        String sql = "UPDATE users SET fcm_token = ? WHERE id = ?";
+        jdbcTemplate.update(sql, fcmToken, userId);
     }
 }

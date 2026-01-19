@@ -18,6 +18,7 @@ import java.util.Map;
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepository userRepository;
 
     @Value("${redirect-uri}")
     private String redirectUri;
@@ -32,6 +33,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String name = (String) attributes.get("name");
         String role = (String) attributes.get("role");
         long userId = (long) attributes.get("userId");
+
+        // FCM 토큰 처리 (클라이언트가 state 파라미터로 전달)
+        String fcmToken = request.getParameter("fcm_token");
+        if (fcmToken != null && !fcmToken.isEmpty()) {
+            userRepository.updateFcmToken(userId, fcmToken);
+        }
 
         String token = jwtTokenProvider.createToken(email, name, role, userId);
 
